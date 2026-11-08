@@ -1,6 +1,6 @@
-streamlit==1.32.0
-torch==2.2.1
-transformers==4.38.2
+streamlit
+torch
+transformers
 indobenchmark-toolkit
 pandas
 numpy
