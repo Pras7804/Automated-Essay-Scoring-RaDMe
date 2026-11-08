@@ -5,3 +5,4 @@ indobenchmark-toolkit
 pandas
 numpy
 sentencepiece
+gdown
