@@ -1,3 +1,5 @@
+import os
+import gdown
 import streamlit as st
 import torch
 import torch.nn as nn
@@ -42,8 +44,19 @@ def load_model():
     tokenizer = IndoNLGTokenizer.from_pretrained(model_name)
     
     model = IndoBARTMultiTask(model_name)
-    # Load bobot yang sudah dilatih (Pastikan nama file sesuai dengan yang Anda unduh)
-    model.load_state_dict(torch.load("model_indobart_aes_final.pt", map_location=torch.device('cpu')))
+    
+    path_model_lokal = "model_indobart_aes_final.pt"
+    
+    # Cek apakah file model sudah ada di sistem. Jika belum, download dari GDrive!
+    if not os.path.exists(path_model_lokal):
+        with st.spinner("Sedang mengunduh otak AI (±500MB). Proses ini hanya terjadi satu kali..."):
+            # GANTI TEKS DI BAWAH INI DENGAN ID FILE GOOGLE DRIVE ANDA
+            file_id = '1LmTiEPAfuedoBUQ5L-0xgONlrNN9_2go' 
+            url = f'https://drive.google.com/uc?id={file_id}'
+            gdown.download(url, path_model_lokal, quiet=False)
+    
+    # Load bobot yang sudah diunduh
+    model.load_state_dict(torch.load(path_model_lokal, map_location=torch.device('cpu')))
     model.eval()
     
     return tokenizer, model
